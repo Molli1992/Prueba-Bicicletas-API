@@ -1,9 +1,38 @@
 import pool from "../db.js";
 
 export const getProducts = async (req, res) => {
-  console.log("Get products");
+  try {
+    const [rows] = await pool.query("SELECT * FROM products");
+    res.status(202).json({ products: rows });
+  } catch (error) {
+    res.status(404).send("Internal Server Error:" + error);
+  }
 };
 
 export const postProducts = async (req, res) => {
-  console.log("Post products");
+  try {
+    const { img, name, price, description, year, time } = req.body;
+
+    if (!img || !name || !price || !description || !year || !time) {
+      res.status(404).send("Mandatory data missing");
+    } else {
+      const [existingProducts] = await pool.query(
+        "SELECT * FROM products WHERE name = ?",
+        [name]
+      );
+
+      if (existingProducts.length > 0) {
+        res.status(409).send("There is already a product with the same name");
+      } else {
+        const [rows] = await pool.query(
+          `INSERT INTO vinos (img,  name, price, description, year, time) VALUES (?, ?, ?, ?, ?, ?) `,
+          [img, name, price, description, year, time]
+        );
+
+        res.status(202).send(`Successfully created product`);
+      }
+    }
+  } catch (error) {
+    res.status(404).send("Internal Server Error:" + error);
+  }
 };

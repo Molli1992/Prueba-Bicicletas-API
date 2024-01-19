@@ -3,7 +3,7 @@ import pool from "../db.js";
 export const getProducts = async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM products");
-    res.status(202).json({ products: rows });
+    res.status(202).json(rows);
   } catch (error) {
     res.status(404).send("Internal Server Error:" + error);
   }
@@ -25,7 +25,7 @@ export const postProducts = async (req, res) => {
         res.status(409).send("There is already a product with the same name");
       } else {
         const [rows] = await pool.query(
-          `INSERT INTO vinos (img,  name, price, description, year, time) VALUES (?, ?, ?, ?, ?, ?) `,
+          `INSERT INTO products (img,  name, price, description, year, time) VALUES (?, ?, ?, ?, ?, ?) `,
           [img, name, price, description, year, time]
         );
 

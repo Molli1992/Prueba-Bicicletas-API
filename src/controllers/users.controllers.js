@@ -1,17 +1,22 @@
 import pool from "../db.js";
 
-export const getUserById = async (req, res) => {
+export const getUserByEmailAndPassword = async (req, res) => {
   try {
-    const productId = req.params.id;
-    const [rows] = await pool.query("SELECT * FROM users WHERE id = ?", [
-      productId,
-    ]);
+    const email = req.params.email;
+    const password = req.params.password;
+
+    const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
 
     if (rows.length === 0) {
       return res.status(404).send("User not found");
     }
 
-    res.status(200).json(rows[0]);
+    const user = rows[0];
+    if (user.password !== password) {
+      return res.status(401).send("Unauthorized: Incorrect password");
+    }
+
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).send("Internal Server Error: " + error);
   }

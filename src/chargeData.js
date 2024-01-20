@@ -15,10 +15,11 @@ const chargeData = async () => {
         let description = i.description;
         let year = i.year;
         let time = i.time;
+        let information = i.information;
 
         const [rows] = await pool.query(
-          `INSERT INTO products (img,  name, price, description, year, time) VALUES (?, ?, ?, ?, ?, ?) `,
-          [img, name, price, description, year, time]
+          `INSERT INTO products (img,  name, price, description, year, time, information) VALUES (?, ?, ?, ?, ?, ?, ?) `,
+          [img, name, price, description, year, time, information]
         );
       });
 

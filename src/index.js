@@ -6,6 +6,7 @@ import productsRoutes from "./routes/products.route.js";
 import userRoutes from "./routes/users.route.js";
 import cartRoutes from "./routes/cart.routes.js";
 import orderRoutes from "./routes/orders.routes.js";
+import { PORT } from "./config.js";
 
 const app = express();
 app.use(cors());
@@ -16,5 +17,5 @@ app.use("/api", userRoutes);
 app.use("/api", cartRoutes);
 app.use("/api", orderRoutes);
 
-app.listen(3001);
-console.log("Server running on port 3001");
+app.listen(PORT);
+console.log(`Server running on port ${PORT}`);

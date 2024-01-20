@@ -9,6 +9,23 @@ export const getProducts = async (req, res) => {
   }
 };
 
+export const getProductById = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const [rows] = await pool.query("SELECT * FROM products WHERE id = ?", [
+      productId,
+    ]);
+
+    if (rows.length === 0) {
+      return res.status(404).send("Product not found");
+    }
+
+    res.status(200).json(rows[0]);
+  } catch (error) {
+    res.status(500).send("Internal Server Error: " + error);
+  }
+};
+
 export const postProducts = async (req, res) => {
   try {
     const { img, name, price, description, year, time } = req.body;

@@ -1,6 +1,6 @@
 import pool from "../db.js";
 
-export const getOrders = async (res) => {
+export const getOrders = async (req, res) => {
   try {
     const query = `
       SELECT 

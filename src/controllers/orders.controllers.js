@@ -3,11 +3,25 @@ import pool from "../db.js";
 export const getOrders = async (res) => {
   try {
     const query = `
-    SELECT o.id AS orderId, o.status, p.id AS productId, p.*, u.id AS userId, u.* 
-    FROM orders o 
-    JOIN products p ON o.productID = p.id 
-    JOIN users u ON o.userEmail = u.email;
-      `;
+      SELECT 
+        o.id AS orderId, 
+        o.status, 
+        p.id AS productId, 
+        p.img, 
+        p.name AS productName, 
+        p.price, 
+        p.description AS productDescription, 
+        p.year AS productYear, 
+        p.time AS productTime, 
+        p.information AS productInformation, 
+        u.id AS userId, 
+        u.email, 
+        u.name AS userName, 
+        u.password 
+      FROM orders o 
+      JOIN products p ON o.productID = p.id 
+      JOIN users u ON o.userEmail = u.email;
+    `;
     const [rows] = await pool.query(query);
     res.status(202).json(rows);
   } catch (error) {
@@ -27,11 +41,25 @@ export const updateOrderStatus = async (req, res) => {
       res.status(404).send("Order not found with id " + orderId);
     } else {
       const query = `
-    SELECT o.id AS orderId, o.status, p.id AS productId, p.*, u.id AS userId, u.* 
-    FROM orders o 
-    JOIN products p ON o.productID = p.id 
-    JOIN users u ON o.userEmail = u.email;
-      `;
+      SELECT 
+        o.id AS orderId, 
+        o.status, 
+        p.id AS productId, 
+        p.img, 
+        p.name AS productName, 
+        p.price, 
+        p.description AS productDescription, 
+        p.year AS productYear, 
+        p.time AS productTime, 
+        p.information AS productInformation, 
+        u.id AS userId, 
+        u.email, 
+        u.name AS userName, 
+        u.password 
+      FROM orders o 
+      JOIN products p ON o.productID = p.id 
+      JOIN users u ON o.userEmail = u.email;
+    `;
       const [rows] = await pool.query(query);
       res.status(202).json(rows);
     }

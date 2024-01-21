@@ -41,7 +41,7 @@ export const postCart = async (req, res) => {
 export const deleteCart = async (req, res) => {
   const cartId = req.params.cartId;
   try {
-    await db.query("DELETE FROM cart WHERE id = $1", [cartId]);
+    await pool.query("DELETE FROM cart WHERE id = ?", [cartId]);
     res.status(200).send({ message: "Cart successfully deleted" });
   } catch (error) {
     res.status(500).send({ message: "Error deleting cart" });

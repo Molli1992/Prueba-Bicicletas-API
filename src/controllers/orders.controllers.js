@@ -3,10 +3,10 @@ import pool from "../db.js";
 export const getOrders = async (req, res) => {
   try {
     const query = `
-        SELECT o.*, p.*, u.* 
-        FROM orders o 
-        JOIN products p ON o.productID = p.id 
-        JOIN users u ON o.userID = u.id;
+    SELECT o.id AS orderId, o.status, p.id AS productId, p.*, u.id AS userId, u.* 
+    FROM orders o 
+    JOIN products p ON o.productID = p.id 
+    JOIN users u ON o.userID = u.id;
       `;
     const [rows] = await pool.query(query);
     res.status(202).json(rows);
@@ -27,7 +27,7 @@ export const updateOrderStatus = async (req, res) => {
       res.status(404).send("Order not found with id " + orderId);
     } else {
       const query = `
-        SELECT o.*, p.*, u.* 
+        SELECT o.id AS orderId, o.status, p.id AS productId, p.*, u.id AS userId, u.* 
         FROM orders o 
         JOIN products p ON o.productID = p.id 
         JOIN users u ON o.userID = u.id;

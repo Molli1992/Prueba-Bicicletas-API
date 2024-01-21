@@ -17,7 +17,7 @@ export const getOrders = async (req, res) => {
 
 export const updateOrderStatus = async (req, res) => {
   const orderId = req.params.id;
-  const newStatus = 0;
+  const newStatus = false;
 
   try {
     const updateQuery = "UPDATE orders SET status = ? WHERE id = ?";
@@ -33,7 +33,7 @@ export const updateOrderStatus = async (req, res) => {
         JOIN users u ON o.userID = u.id;
       `;
       const [rows] = await pool.query(query);
-      res.status(202).json({ orders: rows, update: updateResult });
+      res.status(202).json(rows);
     }
   } catch (error) {
     res.status(500).send("Internal Server Error: " + error.message);

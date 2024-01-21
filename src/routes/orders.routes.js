@@ -9,6 +9,6 @@ const router = Router();
 
 router.get("/orders", getOrders);
 router.post("/orders", postOrders);
-router.put("/orders/:id", updateOrderStatus);
+router.put("/orders/:userEmail", updateOrderStatus);
 
 export default router;

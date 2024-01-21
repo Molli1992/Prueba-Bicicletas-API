@@ -42,14 +42,14 @@ export const updateOrderStatus = async (req, res) => {
 
 export const postOrders = async (req, res) => {
   try {
-    const { productID, userID, status } = req.body;
+    const { productID, userEmail, status } = req.body;
 
-    if (!productID || !userID) {
+    if (!productID || !userEmail) {
       res.status(400).send("Mandatory data missing");
     } else {
       const [rows] = await pool.query(
-        `INSERT INTO orders (productID, userID, status) VALUES (?, ?, ?) `,
-        [productID, userID, status]
+        `INSERT INTO orders (productID, userEmail, status) VALUES (?, ?, ?) `,
+        [productID, userEmail, status]
       );
 
       res.status(202).send(`Purchase made`);

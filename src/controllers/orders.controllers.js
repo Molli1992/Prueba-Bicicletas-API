@@ -32,8 +32,8 @@ export const updateOrderStatus = async (req, res) => {
         JOIN products p ON o.productID = p.id 
         JOIN users u ON o.userID = u.id;
       `;
-      const [rows] = await pool.query(updateResult.affectedRows);
-      res.status(202).json(rows);
+      const [rows] = await pool.query(query);
+      res.status(202).json({ orders: rows, update: updateResult });
     }
   } catch (error) {
     res.status(500).send("Internal Server Error: " + error.message);

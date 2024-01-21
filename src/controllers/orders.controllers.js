@@ -44,8 +44,8 @@ export const postOrders = async (req, res) => {
   try {
     const { productID, userEmail, status } = req.body;
 
-    if (!productID || !userEmail) {
-      res.status(400).send("Mandatory data missing");
+    if (!productID || !userEmail || !status) {
+      res.status(400).send("Mandatory data missing on orders");
     } else {
       const [rows] = await pool.query(
         `INSERT INTO orders (productID, userEmail, status) VALUES (?, ?, ?) `,

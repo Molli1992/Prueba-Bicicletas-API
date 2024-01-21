@@ -17,7 +17,7 @@ export const getOrders = async (req, res) => {
 
 export const updateOrderStatus = async (req, res) => {
   const orderId = req.params.id;
-  const newStatus = false;
+  const newStatus = 0;
 
   try {
     const updateQuery = "UPDATE orders SET status = ? WHERE id = ?";

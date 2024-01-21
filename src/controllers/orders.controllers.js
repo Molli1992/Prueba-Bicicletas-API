@@ -16,8 +16,7 @@ export const getOrders = async (req, res) => {
         p.information AS productInformation, 
         u.id AS userId, 
         u.email, 
-        u.name AS userName, 
-        u.password 
+        u.name AS userName,
       FROM orders o 
       JOIN products p ON o.productID = p.id 
       JOIN users u ON o.userEmail = u.email;
@@ -54,8 +53,7 @@ export const updateOrderStatus = async (req, res) => {
         p.information AS productInformation, 
         u.id AS userId, 
         u.email, 
-        u.name AS userName, 
-        u.password 
+        u.name AS userName,
       FROM orders o 
       JOIN products p ON o.productID = p.id 
       JOIN users u ON o.userEmail = u.email;

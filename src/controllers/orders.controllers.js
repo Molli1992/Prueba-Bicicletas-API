@@ -1,12 +1,12 @@
 import pool from "../db.js";
 
-export const getOrders = async (req, res) => {
+export const getOrders = async (res) => {
   try {
     const query = `
     SELECT o.id AS orderId, o.status, p.id AS productId, p.*, u.id AS userId, u.* 
     FROM orders o 
     JOIN products p ON o.productID = p.id 
-    JOIN users u ON o.userID = u.id;
+    JOIN users u ON o.userEmail = u.email;
       `;
     const [rows] = await pool.query(query);
     res.status(202).json(rows);
@@ -16,21 +16,21 @@ export const getOrders = async (req, res) => {
 };
 
 export const updateOrderStatus = async (req, res) => {
-  const userEmail = req.params.userEmail;
+  const orderId = req.params.id;
   const newStatus = 0;
 
   try {
-    const updateQuery = "UPDATE orders SET status = ? WHERE userEmail = ?";
-    const [updateResult] = await pool.query(updateQuery, [newStatus, userEmail]);
+    const updateQuery = "UPDATE orders SET status = ? WHERE id = ?";
+    const [updateResult] = await pool.query(updateQuery, [newStatus, orderId]);
 
     if (updateResult.affectedRows === 0) {
       res.status(404).send("Order not found with id " + orderId);
     } else {
       const query = `
-        SELECT o.id AS orderId, o.status, p.id AS productId, p.*, u.id AS userId, u.* 
-        FROM orders o 
-        JOIN products p ON o.productID = p.id 
-        JOIN users u ON o.userEmail = u.email;
+    SELECT o.id AS orderId, o.status, p.id AS productId, p.*, u.id AS userId, u.* 
+    FROM orders o 
+    JOIN products p ON o.productID = p.id 
+    JOIN users u ON o.userEmail = u.email;
       `;
       const [rows] = await pool.query(query);
       res.status(202).json(rows);

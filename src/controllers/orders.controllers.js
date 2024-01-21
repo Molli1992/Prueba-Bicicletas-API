@@ -32,7 +32,7 @@ export const updateOrderStatus = async (req, res) => {
         JOIN products p ON o.productID = p.id 
         JOIN users u ON o.userID = u.id;
       `;
-      const [rows] = await pool.query(query);
+      const [rows] = await pool.query({ orders: query, update: updateResult });
       res.status(202).json(rows);
     }
   } catch (error) {

@@ -47,3 +47,14 @@ export const deleteCart = async (req, res) => {
     res.status(500).send({ message: "Error deleting cart" });
   }
 };
+
+export const deleteAllCarts = async (req, res) => {
+  const userEmail = req.params.userEmail;
+
+  try {
+    await pool.query("DELETE FROM cart WHERE userEmail = ?", [userEmail]);
+    res.status(200).send("All carts deleted");
+  } catch (error) {
+    res.status(500).send("Error deleting carts for the user");
+  }
+};

@@ -104,7 +104,7 @@ export const meyBlaksEmail = async (req, res) => {
     }
 
     const mailOptions = {
-      from: UserNODEMAILER,
+      from: `"${clientEmail}" <${UserNODEMAILER}>`,
       to: "felipe.blaksley@hotmail.com",
       subject: "Nuevo contacto desde MeyBlaks",
       html: `
